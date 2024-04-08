@@ -22,7 +22,7 @@ router.post("/details", authMiddleware, async (req,res)=>{
 
     const { amount, to } = req.body;
 
-    const account = await Account.findOne({userId: req.userId}).session();
+    const account = await Account.findOne({userId: req.userId}).session(session);
 
     if(!account || account.balance < amount) {
         await session.abortTransaction();
@@ -31,7 +31,7 @@ router.post("/details", authMiddleware, async (req,res)=>{
         })
     }
 
-    const toAccount = await Account.findOne({userID: to}).session();
+    const toAccount = await Account.findOne({userID: to}).session(session);
 
     if(toAccount) {
         await session.abortTransaction();
@@ -45,14 +45,14 @@ router.post("/details", authMiddleware, async (req,res)=>{
             "$inc": {
                 balance: -amount
             }
-        }).session();
+        }).session(session);
 
     await Account.updateOne({userId: to},
         {
             "$inc": {
                 balance: amount
             }
-        }).session();
+        }).session(session);
 
     await session.commitTransaction();
     res.json({
