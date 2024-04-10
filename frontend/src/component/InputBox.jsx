@@ -1,7 +1,7 @@
 
 export const Inputbox = ({label, placeholder})=>{
     return <div>
-        <div className="text-sm ">
+        <div className="text-sm font-medium text-left py-2 ">
             {label}
         </div>
         <input placeholder={placeholder} className="w-full px-2 border rounded"/>

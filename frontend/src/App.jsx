@@ -7,10 +7,10 @@ function App() {
   return (
     <>
        <BrowserRouter>
-       <Routes>
-          <Route path="/signup" element= {<Signup />} />
-          <Route path="/signin" element= {<Signin />} />
-       </Routes>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+        </Routes>
        </BrowserRouter>
     </>
   )
