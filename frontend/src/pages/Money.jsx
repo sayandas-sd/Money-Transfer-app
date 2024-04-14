@@ -1,12 +1,14 @@
 import axios from "axios"
 import { useState } from "react";
 import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const Transfer = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const name = searchParams.get("name");
     const [amount, setAmount] = useState(0);
+    const navigate = useNavigate();
 
     return <div className="flex justify-center items-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
@@ -33,16 +35,21 @@ export const Transfer = () => {
 
                             </div>
                             <div className="mt-4">
-                                <button className="w-full text-white bg-sky-400 hover:bg-sky-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2
-                                " onClick={()=>{
-                                    axios.post("http://localhost:3000/api/v1/account/transfer",{
-                                        to: id,
-                                        amount
-                                    },{
-                                        headers: {
-                                            Authorization: "Bearer " + localStorage.getItem("token")
-                                        }
-                                    })
+                                <button className="w-full text-white bg-sky-400 hover:bg-sky-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 me-2 m" 
+                                onClick={async ()=>{
+                                    try {
+                                        await axios.post("http://localhost:3000/api/v1/account/transfer", {
+                                            to: id,
+                                            amount
+                                        }, {
+                                            headers: {
+                                                Authorization: "Bearer " + localStorage.getItem("token")
+                                            }
+                                        });
+                                    } catch (error) {
+                                        console.error("Error occurred during transfer:");
+                                    }
+                                    navigate("/success");
                                 }}>
                                     Send money
                                 </button>

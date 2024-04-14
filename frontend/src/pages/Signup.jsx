@@ -37,7 +37,6 @@ export const Signup = () => {
 
                 <div className="pt-5">
                     <Button onClick={async () => {
-                        try{
                         const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
                             username,
                             firstname,
@@ -47,9 +46,6 @@ export const Signup = () => {
 
                         localStorage.setItem("token", response.data.token)
                         navigate("/signin");
-                    } catch (error) {
-                        console.error("Error signing up:", error);
-                    }
                     }} label={"Sign up"} ></Button>
                 </div>
                 <BottomComp label={"Already have an account"} bottonText={"Sign in"} to ={"/signin"} />
